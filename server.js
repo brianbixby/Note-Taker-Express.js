@@ -9,6 +9,9 @@ const PORT = process.env.PORT || 3000;
 const path = require('path');
 const notes = require('./db/db.json');
 
+const fs = require("fs");
+const util = require("util");
+
 app.use(compression());
 app.use(cors());
 
@@ -35,16 +38,13 @@ app.get('/notes', (req, res) =>
 )
 
 app.get('/api/notes', (req, res) => {
-	// Log our request to the terminal
-	console.info(`${req.method} request received to get notes`);
-
-	// Sending all notes to the client
-	return res.json(notes);
+	console.info(`GET /api/notes`);
+	res.status(200).json(notes);
 });
 
 app.post('/api/notes', (req, res) => {
 	// Log that a POST request was received
-	console.info(`${req.method} request received to add a review`);
+	console.info(`${req.method} request received to add a note`);
 
 	// Prepare a response object to send back to the client
 	let response;
@@ -55,7 +55,8 @@ app.post('/api/notes', (req, res) => {
 			status: 'success',
 			data: req.body,
 		};
-		res.json(`Review for ${response.data.title} has been added!`);
+		notes.push(req.body);
+		res.json(`Note for ${response.data.title} has been added!`);
 	} else {
 		res.json('Request body must at least contain a note title and text');
 	}
@@ -64,7 +65,7 @@ app.post('/api/notes', (req, res) => {
 	console.log(req.body);
 });
 
-app.post('/api/notes', (req, res) => {
+app.delete('/api/notes/:id', (req, res) => {
 	// Log that a POST request was received
 	console.info(`${req.method} request received to add a review`);
 
