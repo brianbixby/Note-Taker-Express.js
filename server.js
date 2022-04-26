@@ -2,7 +2,7 @@
 
 const compression = require('compression');
 const express = require('express');
-const debug = require('debug')('noteTaker:server');
+// const debug = require('debug')('noteTaker:server');
 const cors = require('cors');
 
 const path = require('path');
@@ -88,4 +88,4 @@ app.delete('/api/notes/:id', (req, res) => {
 	console.log(req.body);
 });
 
-app.listen(PORT, () => debug(`listening on ${PORT}`));
+app.listen(PORT, () => console.log(`listening on ${PORT}`));
