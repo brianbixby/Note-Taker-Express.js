@@ -4,13 +4,14 @@ const compression = require('compression');
 const express = require('express');
 const debug = require('debug')('noteTaker:server');
 const cors = require('cors');
-const app = express();
-const PORT = process.env.PORT || 3000;
-const path = require('path');
-const notes = require('./db/db.json');
 
+const path = require('path');
 const fs = require("fs");
 const util = require("util");
+
+const PORT = process.env.PORT || 3000;
+const notes = require('./db/db.json');
+const app = express();
 
 app.use(compression());
 app.use(cors());
